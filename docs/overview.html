@@ -1,0 +1,341 @@
+<title>Bayyina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: an evidence-file look. Hero pairs the name with a live "evidence card"; sections read like a case file with tabbed exhibits. */
+:root{
+  --paper:#f5f6f4; --sheet:#ffffff; --ink:#14202b; --muted:#5b6670; --rule:#d6dbd8;
+  --seal:#9e2a2b; --proof:#1f6f50; --doubt:#b07a12; --tint:#e9eeeb;
+  --display:"Newsreader", Georgia, serif; --body:"IBM Plex Sans", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0f1418; --sheet:#161d22; --ink:#e6ebe8; --muted:#97a3a0; --rule:#2a343a;
+  --seal:#e0706f; --proof:#5cc79a; --doubt:#e4b14a; --tint:#1b262b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0f1418; --sheet:#161d22; --ink:#e6ebe8; --muted:#97a3a0; --rule:#2a343a;
+  --seal:#e0706f; --proof:#5cc79a; --doubt:#e4b14a; --tint:#1b262b; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;padding-inline:16px;padding-block:28px 72px}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:72px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0;font-weight:700}
+h2{font-size:clamp(1.6rem,3.4vw,2.2rem)} h3{font-size:1.15rem}
+p{margin:0} ul,ol{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+a{color:var(--seal)} a:focus-visible,button:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
+.label{font-family:var(--mono);font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.read{max-width:64ch;color:var(--muted);font-size:1.05rem}
+section{display:flex;flex-direction:column;gap:20px}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding-top:12px}
+.hero>div{min-width:0;display:flex;flex-direction:column;gap:18px}
+.name{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.name h1{font-size:clamp(3rem,9vw,5.6rem);letter-spacing:-.02em}
+.tagline{font-family:var(--display);font-size:clamp(1.3rem,2.6vw,1.7rem);font-style:italic}
+.meta{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+
+/* Evidence card */
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 10px 30px -18px rgba(20,32,43,.35)}
+.card .top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{font:500 .78rem var(--mono);padding:5px 10px;border-radius:99px;border:1px solid var(--rule);background:transparent;color:var(--muted);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.photo{aspect-ratio:4/3;max-width:100%;border-radius:6px;position:relative;overflow:hidden;background:linear-gradient(160deg,#6c7a86 0%,#3b4752 55%,#232c34 100%)}
+.photo canvas{width:100%;height:100%;display:block}
+.stamp{position:absolute;right:10px;top:10px;font:600 .72rem var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:4px;border:2px solid currentColor;background:var(--sheet);transform:rotate(-3deg)}
+.rows{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.88rem}
+.rows dt{font-family:var(--mono);font-size:.74rem;color:var(--muted);padding-top:2px}
+.rows dd{margin:0;min-width:0}
+.ok{color:var(--proof)} .warn{color:var(--doubt)} .bad{color:var(--seal)}
+.meter{height:6px;background:var(--tint);border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;background:currentColor;transition:width .4s ease}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-block:1px solid var(--rule)}
+.stat{padding:20px 18px;display:flex;flex-direction:column;gap:6px;border-right:1px solid var(--rule);min-width:0}
+.stat:last-child{border-right:0}
+.stat b{font-family:var(--display);font-size:2.2rem;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{font-size:.88rem;color:var(--muted)}
+
+/* Steps: a real sequence */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:s}
+.step{border-top:2px solid var(--ink);padding-top:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.step .n{font-family:var(--mono);font-size:.8rem;color:var(--seal)}
+.step p{font-size:.94rem;color:var(--muted)}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.two>div{min-width:0;display:flex;flex-direction:column;gap:12px}
+.tbl{overflow-x:auto;background:var(--sheet);border:1px solid var(--rule);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:560px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font:500 .72rem var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td.c{text-align:center;font-family:var(--mono)}
+tr.us td{background:var(--tint);font-weight:600}
+pre.mermaid{background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:16px;overflow-x:auto;margin:0}
+.note{border-left:3px solid var(--seal);padding:4px 0 4px 16px;color:var(--ink)}
+
+/* Brand */
+.brand{display:grid;grid-template-columns:1fr 1fr;gap:28px;background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:28px}
+.brand>div{min-width:0;display:flex;flex-direction:column;gap:12px}
+.repo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.repo code{font:500 1.15rem var(--mono);background:var(--tint);padding:8px 12px;border-radius:6px;user-select:all}
+.repo button{font:500 .8rem var(--mono);padding:8px 12px;border-radius:6px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
+.alts li{font-size:.94rem}
+.sources li{font-size:.84rem;word-break:break-word}
+
+@media (max-width:820px){
+  .hero,.two,.brand{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat:nth-child(2){border-right:0}
+  .stat:nth-child(-n+2){border-bottom:1px solid var(--rule)}
+}
+@media (max-width:480px){.steps{grid-template-columns:1fr}.brand{padding:18px}}
+@media (prefers-reduced-motion:reduce){.meter i{transition:none}}
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <div>
+    <span class="label">Trusted-evidence claims · POC proposal for GBS</span>
+    <div class="name"><h1>Bayyina</h1></div>
+    <p class="tagline">Proof before payout.</p>
+    <p class="read">Insurers pay claims on photos, and AI can now fake those photos in seconds. Bayyina proves each photo is real at the moment it is taken, checks the ones it cannot prove, and lets an AI agent prepare a decision file that cites the policy. A claims handler makes the final call.</p>
+    <p class="meta">Research, architecture and system design · October 2026 · Anass El Alaoui</p>
+  </div>
+
+  <div class="card" aria-label="Example evidence check">
+    <div class="top"><span>Claim CL-2026-00418 · photo 2 of 6</span><span>Motor · MAD</span></div>
+    <div class="tabs" role="tablist">
+      <button role="tab" id="t-ok" aria-selected="true" data-k="ok">Signed capture</button>
+      <button role="tab" id="t-up" aria-selected="false" data-k="up">Gallery upload</button>
+      <button role="tab" id="t-ai" aria-selected="false" data-k="ai">AI-generated</button>
+    </div>
+    <div class="photo"><canvas id="ph" width="400" height="300" aria-hidden="true"></canvas><span class="stamp ok" id="stamp">Verified</span></div>
+    <dl class="rows">
+      <dt>Provenance</dt><dd id="r-prov" class="ok">Signed on device at 14:02, unchanged since</dd>
+      <dt>Forensics</dt><dd id="r-for">No signals</dd>
+      <dt>Risk</dt><dd><div class="meter ok" id="r-met"><i style="width:4%"></i></div></dd>
+      <dt>Next step</dt><dd id="r-act">Fast track, handler confirms</dd>
+    </dl>
+  </div>
+</header>
+
+<section aria-label="The problem in numbers">
+  <span class="label">Why this matters now</span>
+  <div class="stats">
+    <div class="stat"><b>$308bn</b><span>Yearly cost of insurance fraud in the US alone (2025 estimate)</span></div>
+    <div class="stat"><b>+300%</b><span>Doctored claim photos reported by Allianz, 2022 to 2023</span></div>
+    <div class="stat"><b>98%</b><span>of insurers say AI editing tools increase digital fraud (Verisk)</span></div>
+    <div class="stat"><b>$0.15–0.35</b><span>Estimated cost for Bayyina to check and assess one claim</span></div>
+  </div>
+</section>
+
+<section>
+  <span class="label">How it works</span>
+  <h2>Proof first. Detection only where proof is missing.</h2>
+  <div class="steps">
+    <div class="step"><span class="n">Step 1</span><h3>Prove at capture</h3><p>The capture app hashes and signs each photo on the device, tied to a one-time code for this claim. Any later edit breaks the signature.</p></div>
+    <div class="step"><span class="n">Step 2</span><h3>Check the rest</h3><p>Gallery uploads go through metadata checks, compression analysis, an AI-image detector and a search for photos reused from other claims.</p></div>
+    <div class="step"><span class="n">Step 3</span><h3>Read the policy</h3><p>An AI agent reads the trusted photos, the policy and the customer's story in Darija, Arabic, French or English, and cites the clauses it used.</p></div>
+    <div class="step"><span class="n">Step 4</span><h3>A person decides</h3><p>The handler sees one clear file and approves, asks for more, or sends it to investigation. Every step lands in a tamper-evident log.</p></div>
+  </div>
+</section>
+
+<section>
+  <span class="label">Market position</span>
+  <h2>Others own one piece. Bayyina joins them.</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Who</th><th>Signed capture</th><th>Forensics</th><th>Policy reasoning</th><th>Multilingual intake</th></tr></thead>
+    <tbody>
+      <tr><td>Damage estimators (e.g. Tractable)</td><td class="c">–</td><td class="c">partial</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><td>Fraud platforms (e.g. Shift, SAS)</td><td class="c">–</td><td class="c">✓</td><td class="c">partial</td><td class="c">partial</td></tr>
+      <tr><td>Capture SDKs (e.g. Truepic)</td><td class="c">✓</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><td>Image detectors (e.g. PhotoDetective)</td><td class="c">–</td><td class="c">✓</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr class="us"><td>Bayyina</td><td class="c">✓</td><td class="c">✓</td><td class="c">✓</td><td class="c">✓</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Built for mid-size insurers, brokers and claims hubs that cannot stitch three vendors together, and for markets where customers write in more than one language. Bayyina plugs into damage estimators instead of competing with them.</p>
+</section>
+
+<section>
+  <span class="label">Architecture</span>
+  <h2>A modular core with a human at the end</h2>
+<pre class="mermaid">
+flowchart LR
+  subgraph Edge
+    CAP[Capture app]
+    CON[Handler console]
+    GW[API gateway]
+  end
+  subgraph Core
+    EVD[Evidence service<br/>hash, sign, verify]
+    FOR[Forensics workers]
+    AGT[Agent service<br/>LLM + schema]
+    DEC[Decision engine<br/>versioned rules]
+    CLM[Claims service]
+    AUD[Audit log<br/>hash-chained]
+  end
+  CAP --> GW --> EVD
+  CON --> GW --> CLM
+  EVD -->|queue| FOR -->|queue| AGT --> DEC --> CLM
+  EVD --> AUD
+  AGT --> AUD
+  CLM --> AUD
+  CLM <--> CORE[(Insurer core system)]
+</pre>
+  <div class="two">
+    <div>
+      <h3>Design decisions</h3>
+      <ul>
+        <li><b>Proof beats detection.</b> A valid signature outweighs any detector score.</li>
+        <li><b>Rules after the model.</b> The final recommendation comes from readable, versioned rules, so behaviour stays predictable.</li>
+        <li><b>Human decision required.</b> No claim is approved or rejected automatically.</li>
+        <li><b>Modular monolith first.</b> One deployable for the POC, with boundaries ready to split into services.</li>
+        <li><b>Integrate on damage estimates.</b> Price table now, specialist estimator later.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Trust rules</h3>
+      <div class="tbl"><table style="min-width:0">
+        <thead><tr><th>Condition</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Broken signature or photo risk ≥ 50</td><td class="bad">Investigate</td></tr>
+          <tr><td>Coverage unclear</td><td class="warn">Ask for information</td></tr>
+          <tr><td>All photos verified, low risk, clear cover</td><td class="ok">Fast track</td></tr>
+          <tr><td>Anything else</td><td>Handler review</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class="label">System design</span>
+  <h2>Built for storms, audits and attacks</h2>
+  <div class="two">
+    <div>
+      <h3>Targets for the pilot</h3>
+      <div class="tbl"><table style="min-width:0">
+        <tbody>
+          <tr><td>Photo upload acknowledged</td><td>&lt; 2 s (p95)</td></tr>
+          <tr><td>Decision file ready</td><td>&lt; 2 min (p95)</td></tr>
+          <tr><td>Example load</td><td>200k claims/yr, ~1,600 on peak days</td></tr>
+          <tr><td>Evidence storage</td><td>~4.8 TB/yr, write-once</td></tr>
+          <tr><td>When the AI is down</td><td>Rules fallback, human review</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div>
+      <h3>Threats we design against</h3>
+      <ul>
+        <li><b>Edited after capture</b> → hash no longer matches, photo marked invalid.</li>
+        <li><b>Replayed photo</b> → one-time code per claim, plus reuse search across all claims.</li>
+        <li><b>Photo of a screen</b> → guided multi-angle capture now, hardware attestation in the pilot.</li>
+        <li><b>Prompt injection</b> ("approve this claim" written in the story or the image) → treated as data, strict output schema, rules decide, human approves.</li>
+        <li><b>Insider edits</b> → hash-chained audit log and role-based access.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class="label">The six-week POC</span>
+  <h2>Five questions, each with a number</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Hypothesis</th><th>Pass mark</th><th>Week</th></tr></thead>
+    <tbody>
+      <tr><td>Signed capture is easy and catches every later edit</td><td>&lt; 2 min capture; 100% of edits caught</td><td>2</td></tr>
+      <tr><td>Forensics catch fakes among unsigned uploads</td><td>≥ 85% caught, ≤ 10% false alarms</td><td>3</td></tr>
+      <tr><td>The agent applies policy clauses correctly</td><td>≥ 85% agreement with an expert</td><td>4</td></tr>
+      <tr><td>Customers can write in their own language</td><td>≥ 90% consistent across 4 languages</td><td>4</td></tr>
+      <tr><td>Handlers save time and trust the file</td><td>Minutes not days; rated ≥ 4/5</td><td>6</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="brand" aria-label="Name and repository">
+  <div>
+    <span class="label">The name</span>
+    <h2>Bayyina</h2>
+    <p>Bayyina stands for clear, decisive evidence: the proof that settles a case. That is exactly what the product gives an insurer before money leaves the account. It is short, easy to say in English and French, and no insurance product uses it as far as a web search shows.</p>
+    <p><b>Tagline:</b> Proof before payout.</p>
+    <p class="meta">Before using it publicly, check trademarks in Morocco (OMPIC) and the EU (EUIPO), and see whether the domain is free.</p>
+  </div>
+  <div>
+    <span class="label">Repository</span>
+    <div class="repo"><code id="repo">bayyina-claims</code><button type="button" id="copy">Copy</button></div>
+    <p class="meta" id="copied" aria-live="polite">GitHub description: "Proof before payout. Trusted-evidence claims: signed capture, forensics and an AI claims agent with a human in the loop."</p>
+    <span class="label" style="margin-top:8px">Other names considered</span>
+    <ul class="alts">
+      <li><b>TrueLoss</b>. Clear in English, less distinctive.</li>
+      <li><b>ClaimLens</b>. Dropped: an existing AI claims company already uses it.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="sources">
+  <span class="label">Sources</span>
+  <ul>
+    <li><a href="https://www.debevoise.com/insights/publications/2026/01/use-of-ai-generated-images-for-fake-insurance">Debevoise: AI-generated images for fake insurance claims (Jan 2026)</a></li>
+    <li><a href="https://www.sas.com/en_us/news/press-releases/2026/may/synthetic-images-ai-insurance-fraud.html">SAS: insurers grapple with AI-generated images (May 2026)</a></li>
+    <li><a href="https://coinlaw.io/insurance-fraud-statistics/">CoinLaw: insurance fraud statistics</a></li>
+    <li><a href="https://www.qorusglobal.com/innovations/30701-photodetective-detecting-ai-generated-and-internet-sourced-fraud">Qorus: PhotoDetective</a></li>
+    <li><a href="https://www.truepic.com/blog/truepics-technology-provides-authenticity-and-content-verification-via-tamper-evident-imagery">Truepic: tamper-evident imagery</a></li>
+    <li><a href="https://c2pa.org/specifications/specifications/1.4/explainer/Explainer.html">C2PA specification explainer</a></li>
+    <li><a href="https://www.analyticsinsight.net/artificial-intelligence/10-leading-ai-powered-insurtech-companies-in-2026">Analytics Insight: leading AI insurtechs 2026</a></li>
+    <li><a href="https://www.startuphub.ai/startups/claimlens.md">StartupHub: ClaimLens (existing company)</a></li>
+    <li><a href="https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/">Gibson Dunn: EU AI Act high-risk deadline postponed</a></li>
+  </ul>
+</section>
+
+</div>
+
+<script>
+(function(){
+  var states = {
+    ok:{stamp:["Verified","ok"],prov:["Signed on device at 14:02, unchanged since","ok"],
+        for:"No signals",risk:4,riskCls:"ok",act:"Fast track, handler confirms",dent:true,glow:false},
+    up:{stamp:["Unproven","warn"],prov:["No signature (forwarded from WhatsApp)","warn"],
+        for:"No camera metadata · mild uneven compression",risk:25,riskCls:"warn",act:"Handler review",dent:true,glow:false},
+    ai:{stamp:["Flagged","bad"],prov:["No signature","warn"],
+        for:"Generator named in metadata · near-copy of claim CL-2026-00102",risk:100,riskCls:"bad",act:"Refer to investigation",dent:true,glow:true}
+  };
+  var cv=document.getElementById("ph"), cx=cv.getContext("2d");
+  function draw(s){
+    var w=cv.width,h=cv.height;
+    var g=cx.createLinearGradient(0,0,0,h); g.addColorStop(0,"#7d8b97"); g.addColorStop(1,"#2a333b");
+    cx.fillStyle=g; cx.fillRect(0,0,w,h);
+    cx.fillStyle="#3a3f44"; cx.fillRect(0,h*.78,w,h*.22);
+    cx.fillStyle="#b9c2c9"; cx.beginPath(); cx.moveTo(30,200); cx.quadraticCurveTo(60,120,150,110);
+    cx.lineTo(270,110); cx.quadraticCurveTo(350,120,375,200); cx.lineTo(375,232); cx.lineTo(30,232); cx.closePath(); cx.fill();
+    cx.fillStyle="#53616d"; cx.fillRect(140,122,120,48);
+    cx.fillStyle="#1c2227"; cx.beginPath(); cx.arc(95,236,26,0,7); cx.fill(); cx.beginPath(); cx.arc(310,236,26,0,7); cx.fill();
+    cx.fillStyle="#f1d27a"; cx.fillRect(340,182,26,14);
+    if(s.dent){ cx.strokeStyle="#4b545c"; cx.lineWidth=3; cx.beginPath(); cx.moveTo(300,180); cx.lineTo(318,196); cx.lineTo(306,210); cx.lineTo(330,224); cx.stroke(); }
+    if(s.glow){ var r=cx.createRadialGradient(312,200,4,312,200,70); r.addColorStop(0,"rgba(255,90,80,.75)"); r.addColorStop(1,"rgba(255,90,80,0)");
+      cx.fillStyle=r; cx.fillRect(220,120,190,160); }
+  }
+  function show(k){
+    var s=states[k];
+    document.querySelectorAll(".tabs button").forEach(function(b){ b.setAttribute("aria-selected", String(b.dataset.k===k)); });
+    var st=document.getElementById("stamp"); st.textContent=s.stamp[0]; st.className="stamp "+s.stamp[1];
+    var p=document.getElementById("r-prov"); p.textContent=s.prov[0]; p.className=s.prov[1];
+    document.getElementById("r-for").textContent=s.for;
+    var m=document.getElementById("r-met"); m.className="meter "+s.riskCls; m.firstElementChild.style.width=Math.max(s.risk,4)+"%";
+    document.getElementById("r-act").textContent=s.act;
+    draw(s);
+  }
+  document.querySelectorAll(".tabs button").forEach(function(b){ b.addEventListener("click",function(){ show(b.dataset.k); }); });
+  show("ok");
+
+  document.getElementById("copy").addEventListener("click",function(){
+    var txt=document.getElementById("repo").textContent, btn=this;
+    function done(){ btn.textContent="Copied"; setTimeout(function(){ btn.textContent="Copy"; },1600); }
+    try{ navigator.clipboard.writeText(txt).then(done,function(){ select(); }); }catch(e){ select(); }
+    function select(){ var r=document.createRange(); r.selectNodeContents(document.getElementById("repo")); var sel=getSelection(); sel.removeAllRanges(); sel.addRange(r); btn.textContent="Press Ctrl+C"; }
+  });
+})();
+</script>
