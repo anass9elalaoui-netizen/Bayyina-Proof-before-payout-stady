@@ -1,6 +1,10 @@
+<p align="center"><img src="assets/banner.svg" alt="Bayyina. Proof before payout." width="100%"></p>
+
 # Bayyina
 
 **Proof before payout.**
+
+**[View the case study →](https://anass9elalaoui-netizen.github.io/Bayyina-Proof-before-payout-stady/)**
 
 Bayyina is a trusted-evidence claims platform for insurers. It proves that claim photos are real, then lets an AI agent read the evidence and the policy and prepare a cited decision file for a human claims handler.
 
@@ -74,6 +78,7 @@ The POC is built to answer five questions:
 | [docs/RESEARCH.md](docs/RESEARCH.md) | Market scan, competition, problem evidence, hypotheses, data plan, risks, sources |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Components, data model, trust scoring, technology choices, decision records |
 | [docs/SYSTEM_DESIGN.md](docs/SYSTEM_DESIGN.md) | Request flows, scaling, reliability, security threat model, privacy, cost, deployment |
+| [index.html](index.html) | Portfolio case study: research, concept, architecture and POC plan (published with GitHub Pages) |
 | [docs/overview.html](docs/overview.html) | One-page visual overview for clients (open in a browser) |
 
 ## Planned stack

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 400" width="1280" height="400" role="img" aria-label="Bayyina. Proof before payout.">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101820"/>
+      <stop offset="1" stop-color="#18252e"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#24333d" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="400" fill="url(#bg)"/>
+  <rect width="1280" height="400" fill="url(#grid)" opacity=".55"/>
+
+  <text x="80" y="118" fill="#8fa3ad" font-family="IBM Plex Mono, Consolas, monospace" font-size="18" letter-spacing="3">TRUSTED-EVIDENCE CLAIMS · RESEARCH &amp; SYSTEM DESIGN</text>
+  <text x="76" y="236" fill="#eef2f0" font-family="Georgia, 'Times New Roman', serif" font-size="128" font-weight="700" letter-spacing="-2">Bayyina</text>
+  <text x="80" y="300" fill="#e0706f" font-family="Georgia, 'Times New Roman', serif" font-size="40" font-style="italic">Proof before payout.</text>
+  <text x="80" y="348" fill="#8fa3ad" font-family="IBM Plex Mono, Consolas, monospace" font-size="17">Signed capture · Forensics · AI claims agent · Human decision</text>
+
+  <g transform="translate(860 70)">
+    <rect width="340" height="260" rx="14" fill="#0c1318" stroke="#2c3d47"/>
+    <rect x="18" y="18" width="304" height="150" rx="8" fill="#5d6c77"/>
+    <path d="M40 140 Q70 78 150 70 L230 70 Q290 78 304 140 L304 160 L40 160 Z" fill="#b9c2c9"/>
+    <rect x="128" y="82" width="90" height="34" fill="#51606b"/>
+    <circle cx="92" cy="162" r="20" fill="#1c2227"/>
+    <circle cx="258" cy="162" r="20" fill="#1c2227"/>
+    <path d="M250 120 L264 132 L254 142 L274 152" stroke="#47515a" stroke-width="3" fill="none"/>
+    <g transform="rotate(-4 262 44)">
+      <rect x="208" y="30" width="104" height="28" rx="4" fill="#0c1318" stroke="#5cc79a" stroke-width="2.5"/>
+      <text x="260" y="50" text-anchor="middle" fill="#5cc79a" font-family="IBM Plex Mono, Consolas, monospace" font-size="15" font-weight="600" letter-spacing="1.5">VERIFIED</text>
+    </g>
+    <text x="22" y="198" fill="#8fa3ad" font-family="IBM Plex Mono, Consolas, monospace" font-size="13">PROVENANCE</text>
+    <text x="130" y="198" fill="#5cc79a" font-family="IBM Plex Mono, Consolas, monospace" font-size="13">signed on device · unchanged</text>
+    <text x="22" y="222" fill="#8fa3ad" font-family="IBM Plex Mono, Consolas, monospace" font-size="13">RISK</text>
+    <rect x="130" y="212" width="190" height="8" rx="4" fill="#24333d"/>
+    <rect x="130" y="212" width="12" height="8" rx="4" fill="#5cc79a"/>
+    <text x="22" y="246" fill="#8fa3ad" font-family="IBM Plex Mono, Consolas, monospace" font-size="13">NEXT STEP</text>
+    <text x="130" y="246" fill="#eef2f0" font-family="IBM Plex Mono, Consolas, monospace" font-size="13">fast track · handler confirms</text>
+  </g>
+</svg>
